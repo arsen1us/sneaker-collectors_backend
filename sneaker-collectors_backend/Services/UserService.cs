@@ -36,9 +36,26 @@ namespace sneaker_collectors_backend.Services
             return null;
         }
 
+        // Проверка, есть ли пользователь с данным id в бд
         public bool UserExists(string userId)
         {
             return _database.Users.Any(u => u.Id == userId);
+        }
+
+        // Проверка, есть ли уже пользователь с таким Login
+        public bool LoginIsTaken(string login)
+        {
+            if(_database.Users.Any(u => u.Login == login))
+                return true;
+            return false;
+        }
+
+        // Проверка, есть ли уже пользователь с таким Email
+        public bool EmailIsTaken(string email)
+        {
+            if (_database.Users.Any(u => u.Email == email))
+                return true;
+            return false;
         }
     }
 }

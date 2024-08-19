@@ -8,5 +8,7 @@ namespace sneaker_collectors_backend.Services
         public Task<User> GetByIdAsync(string userId);
         public Task AddAsync(RegUser user);
         public bool UserExists(string userId);
+        public bool LoginIsTaken(string login);
+        public bool EmailIsTaken(string email);
     }
 }
