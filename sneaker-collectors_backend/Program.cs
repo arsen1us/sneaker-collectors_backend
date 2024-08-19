@@ -8,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Default", policy =>
+    {
+        policy.AllowAnyMethod();
+        policy.AllowAnyHeader();
+        policy.AllowAnyOrigin();
+    });
+});
+
 var configBuilder = new ConfigurationBuilder();
 configBuilder.SetBasePath(Directory.GetCurrentDirectory());
 configBuilder.AddJsonFile("appsettings.json");
@@ -32,5 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+
+app.UseCors("Default");
 
 app.Run();
