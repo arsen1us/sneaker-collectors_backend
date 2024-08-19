@@ -390,7 +390,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("email");
             entity.Property(e => e.Gender)
-                .HasMaxLength(10)
+                .HasMaxLength(24)
                 .IsUnicode(false)
                 .HasDefaultValue("do not specify")
                 .HasColumnName("gender");
@@ -401,6 +401,7 @@ public partial class SneakerCollectorsContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(25)
                 .IsUnicode(false)
+                .HasDefaultValue("do not specify")
                 .HasColumnName("name");
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
@@ -414,6 +415,7 @@ public partial class SneakerCollectorsContext : DbContext
             entity.Property(e => e.Surname)
                 .HasMaxLength(25)
                 .IsUnicode(false)
+                .HasDefaultValue("do not specify")
                 .HasColumnName("surname");
         });
 

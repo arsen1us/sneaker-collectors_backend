@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using sneaker_collectors_backend;
+using sneaker_collectors_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddTransient<IUserService, UserService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -28,6 +31,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/", () => "Hello World!");
+app.MapControllers();
 
 app.Run();

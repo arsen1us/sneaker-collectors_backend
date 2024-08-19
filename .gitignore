@@ -41,11 +41,6 @@ out/
 appsettings.Development.json
 secrets.json
 
-# Файлы для контейнеризации
-docker-compose.*
-*.dockerignore
-Dockerfile*
-
 # Файлы тестирования
 TestResult*/
 *.trx
