@@ -27,10 +27,12 @@ namespace sneaker_collectors_backend.Controllers
                 BadRequest();
 
             if (_userService.LoginIsTaken(user.Login))
-                return Json($"Login {user.Login} already taken");
+                //return Json($"Login {user.Login} already taken");
+                return StatusCode(200, $"Login {user.Login} already taken");
 
             if (_userService.EmailIsTaken(user.Email))
-                return Json($"Email {user.Email} already taken");
+                //return Json($"Email {user.Email} already taken");
+                return StatusCode(200, $"Login {user.Login} already taken");
 
             await _userService.AddAsync(user);
 
