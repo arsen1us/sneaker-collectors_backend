@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using sneaker_collectors_backend;
 using sneaker_collectors_backend.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,25 @@ builder.Services.AddCors(options =>
     });
 });
 
+var configuration = builder.Configuration;
+
+// JwtToken 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = configuration["JwtSettings:Issuer"],
+            ValidAudience = configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
+        };
+    });
+
+// БД
 var configBuilder = new ConfigurationBuilder();
 configBuilder.SetBasePath(Directory.GetCurrentDirectory());
 configBuilder.AddJsonFile("appsettings.json");
@@ -30,7 +52,9 @@ builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
+// Зависимости
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 
 var app = builder.Build();
 
