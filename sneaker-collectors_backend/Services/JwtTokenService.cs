@@ -44,7 +44,9 @@ namespace sneaker_collectors_backend.Services
         // Обновить истёкший jwt-token
         public async Task<string> UpdateAsync(string jwtToken)
         {
-            var principal = GetPrincipalExpiredToken(jwtToken);
+            string token = jwtToken.Substring(7);
+
+            var principal = GetPrincipalExpiredToken(token);
 
             string id = principal.FindFirst("Id").Value;
             string login = principal.FindFirst("Login").Value;
@@ -52,9 +54,8 @@ namespace sneaker_collectors_backend.Services
             var user = await _userService.GetAsync(id, login);
             if (user is null)
                 return string.Empty;
-            var token = GenerateJwtToken(user);
-            return token;
-
+            var newToken = GenerateJwtToken(user);
+            return newToken;
         }
 
         // Создать Refresh token

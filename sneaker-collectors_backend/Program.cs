@@ -17,7 +17,8 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyMethod();
         policy.AllowAnyHeader();
-        policy.AllowAnyOrigin();
+        policy.WithOrigins("http://localhost:3000");
+        policy.WithExposedHeaders("Authorization"); // Чтобы достать Header на фронте;
     });
 });
 
@@ -65,8 +66,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
-
 app.UseCors("Default");
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
