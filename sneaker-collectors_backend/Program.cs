@@ -67,8 +67,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("Default");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
