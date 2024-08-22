@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using sneaker_collectors_backend.Services;
+using sneaker_collectors_backend.Models;
 using sneaker_collectors_backend.Models.Database;
+using sneaker_collectors_backend.Services;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using sneaker_collectors_backend.Models;
 
 namespace sneaker_collectors_backend.Controllers
 {
@@ -29,20 +29,6 @@ namespace sneaker_collectors_backend.Controllers
         [Route("reg")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegUser regUser)
         {
-            //if(regUser is null) 
-            //    BadRequest();
-
-            // Проверка доступности Login и Email
-            //if (_userService.LoginIsTaken(regUser.Login))
-            //{
-            //    return Json($"Login {regUser.Login} already taken");
-            //}
-
-            //if (_userService.EmailIsTaken(regUser.Email))
-            //{
-            //    return Json($"Email {regUser.Email} already taken");
-            //}
-
             User user = new User
             {
                 Id = Guid.NewGuid().ToString(),
@@ -107,6 +93,39 @@ namespace sneaker_collectors_backend.Controllers
                 return Ok(true);
             }
             return Ok(false);
+        }
+
+        [HttpPost]
+        [Route("auth")]
+        public async Task<IActionResult> AuthenticateAsync([FromBody] AuthUser authUser)
+        {
+            User user;
+
+            if (!await _userService.UserExists(authUser))
+            {
+                return Json("User with email or login doesnt exist");
+            }
+            else
+            {
+                user = await _userService.GetAsync(authUser);
+
+                // Добавить jwt-token в заголовок Authorization
+                string jwtToken = _jwtTokenService.GenerateJwtToken(user);
+                Response.Headers.Add("Authorization", $"Bearer {jwtToken}");
+
+                // Добавить refresh-token в HttpOnly Cookie
+                string refreshToken = _jwtTokenService.GenerateRefreshToken();
+                Response.Cookies.Append("RefreshToken", refreshToken, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.UtcNow.AddHours(1)
+                });
+                string jsonUser = JsonSerializer.Serialize(user);
+                return Json(jsonUser);
+
+            }
         }
     }
 }
