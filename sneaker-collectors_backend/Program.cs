@@ -3,8 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using sneaker_collectors_backend;
-using sneaker_collectors_backend.Services;
 using System.Text;
+using sneaker_collectors_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,9 +53,10 @@ builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-// Зависимости
+// Custom-Зависимости
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
+builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();
 
 var app = builder.Build();
 

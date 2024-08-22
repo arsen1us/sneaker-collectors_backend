@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using sneaker_collectors_backend.Services;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using sneaker_collectors_backend.Services;
 
 namespace sneaker_collectors_backend.Controllers
 {
