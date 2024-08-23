@@ -7,6 +7,8 @@ public partial class Brand
 {
     public string Id { get; set; } = null!;
 
+    public string Title { get; set; } = null!;
+
     public string LogoSrc { get; set; } = null!;
 
     public string History { get; set; } = null!;

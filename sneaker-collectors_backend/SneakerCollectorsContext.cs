@@ -60,6 +60,10 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasMaxLength(36)
                 .IsUnicode(false)
                 .HasColumnName("id");
+            entity.Property(e => e.Title)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("title");
             entity.Property(e => e.Country)
                 .HasMaxLength(25)
                 .IsUnicode(false)
@@ -310,6 +314,11 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("model");
+            entity.Property(e => e.Gender)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("gender")
+                .HasDefaultValue("do not specify");
         });
 
         modelBuilder.Entity<SneakerSamplesPhoto>(entity =>

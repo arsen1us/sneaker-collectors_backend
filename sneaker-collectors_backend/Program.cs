@@ -57,6 +57,7 @@ builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();
+builder.Services.AddTransient<ISnSampleService, SnSampleService>();
 
 var app = builder.Build();
 

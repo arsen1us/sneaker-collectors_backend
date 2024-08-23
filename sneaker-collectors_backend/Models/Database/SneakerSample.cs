@@ -16,6 +16,8 @@ public partial class SneakerSample
 
     public string Color { get; set; } = null!;
 
+    public string Gender { get; set; } = null!;
+
     public virtual ICollection<SneakerMaterial> SneakerMaterials { get; set; } = new List<SneakerMaterial>();
 
     public virtual ICollection<SneakerPurpose> SneakerPurposes { get; set; } = new List<SneakerPurpose>();
