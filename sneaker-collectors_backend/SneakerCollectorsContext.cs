@@ -42,12 +42,18 @@ public partial class SneakerCollectorsContext : DbContext
 
     public virtual DbSet<UserSneakersPhoto> UserSneakersPhotos { get; set; }
 
+    public virtual DbSet<SneakerColor> SneakersColors { get; set; }
+
+    public virtual DbSet<SneakerTechnology> SneakerTechnologies { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=DESKTOP-9RTLIH5;Initial Catalog=sneaker_collectors;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Таблица с информацией о брендах
+
         modelBuilder.Entity<Brand>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__brands__3213E83FCF3DEB8C");
@@ -85,6 +91,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("official_site_url");
         });
+        // Таблица с информацией об основателях брендов
 
         modelBuilder.Entity<BrandFounder>(entity =>
         {
@@ -123,6 +130,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__brand_fou__died___59FA5E80");
         });
+        // Таблица с информацией о новостях
 
         modelBuilder.Entity<News>(entity =>
         {
@@ -158,6 +166,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("update_at");
         });
+        // Таблица с тегами для новостей
 
         modelBuilder.Entity<NewsHashtag>(entity =>
         {
@@ -185,6 +194,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__news_hash__hasht__06CD04F7");
         });
+        // Таблица с фото для новостей
 
         modelBuilder.Entity<NewsPhoto>(entity =>
         {
@@ -213,6 +223,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__news_phot__photo__0B91BA14");
         });
+        // Таблица с материалами шаблонов кроссовок
 
         modelBuilder.Entity<SneakerMaterial>(entity =>
         {
@@ -256,6 +267,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__sneaker_m__insol__74AE54BC");
         });
+        // Таблица с предназначением кроссовок
 
         modelBuilder.Entity<SneakerPurpose>(entity =>
         {
@@ -283,6 +295,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__sneaker_p__purpo__7D439ABD");
         });
+        // Таблица с шаблонами кроссовок
 
         modelBuilder.Entity<SneakerSample>(entity =>
         {
@@ -292,6 +305,7 @@ public partial class SneakerCollectorsContext : DbContext
 
             entity.HasIndex(e => e.Id, "UQ__sneaker___3213E83EDA7D1AC6").IsUnique();
 
+
             entity.Property(e => e.Id)
                 .HasMaxLength(36)
                 .IsUnicode(false)
@@ -300,11 +314,11 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasMaxLength(36)
                 .IsUnicode(false)
                 .HasColumnName("brand_id");
-            entity.Property(e => e.Color)
+            entity.Property(e => e.ColorId)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasDefaultValue("not specified")
-                .HasColumnName("color");
+                .HasColumnName("color_id");
             entity.Property(e => e.Discription)
                 .HasMaxLength(200)
                 .IsUnicode(false)
@@ -319,7 +333,13 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("gender")
                 .HasDefaultValue("do not specify");
+
+            entity.HasOne(d => d.Color)
+                .WithOne(p => p.SneakerSample)
+                .HasForeignKey<SneakerSample>(d => d.ColorId)
+                .HasConstraintName("FK__sneaker_s__color__540C7B00");
         });
+        // Таблица с фото шаблонов кроссовок
 
         modelBuilder.Entity<SneakerSamplesPhoto>(entity =>
         {
@@ -348,6 +368,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__sneaker_s__photo__6D0D32F4");
         });
+        // Таблица с состоянием кроссовок пользователей
 
         modelBuilder.Entity<SneakersState>(entity =>
         {
@@ -376,6 +397,59 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__sneakers___sneak__797309D9");
         });
+        // Таблица с цветами шаблонов кроссовок
+
+        modelBuilder.Entity<SneakerColor>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__sneaker___3213E83FF693A941");
+            entity.ToTable("sneaker_colors");
+            entity.HasIndex(e => e.Id, "UQ__sneaker___3213E83E3F53FC7F").IsUnique();
+            entity.HasIndex(e => e.Color, "UQ__sneaker___900DC6E91E7D104D").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("id");
+
+            entity.Property(e => e.Color)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("color");
+
+            entity.HasOne(d => d.SneakerSample)
+                .WithOne(p => p.Color)
+                .HasForeignKey<SneakerSample>(d => d.ColorId);
+        });
+        // Таблица с технологиями кроссовок
+
+        modelBuilder.Entity<SneakerTechnology>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__sneakers__3213E83FA82AC8A9");
+            entity.ToTable("sneakers_technologies");
+            entity.HasIndex(e => e.Id, "UQ__sneakers__3213E83E3FB86B78").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("id");
+
+            entity.Property(e => e.Technology)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("technology)")
+                .HasDefaultValue("do not specify");
+
+            entity.Property(e => e.SneakerId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("sneaker_id)");
+
+            entity.HasOne(d => d.SneakerSample)
+                .WithMany(p => p.SneakerTechnologies)
+                .HasForeignKey(d => d.SneakerId)
+                .HasConstraintName("FK__sneakers___techn__58D1301D");
+        });
+        // Таблица с пользователями
 
         modelBuilder.Entity<User>(entity =>
         {
@@ -427,6 +501,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasDefaultValue("do not specify")
                 .HasColumnName("surname");
         });
+        // Таблица с кроссовками пользователей
 
         modelBuilder.Entity<UserSneaker>(entity =>
         {
@@ -464,6 +539,7 @@ public partial class SneakerCollectorsContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__user_snea__seaso__5EBF139D");
         });
+        // Таблица с фото кроссовок пользователей
 
         modelBuilder.Entity<UserSneakersPhoto>(entity =>
         {

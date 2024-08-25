@@ -33,7 +33,7 @@ namespace sneaker_collectors_backend.Services
                                       sn.Model,
                                       b.LogoSrc,
                                       b.Title,
-                                      sn.Color,
+                                      sn.ColorId,
                                       sp.Purpose,
                                   } into grouped
 
@@ -43,7 +43,7 @@ namespace sneaker_collectors_backend.Services
                                       Model = grouped.Key.Model,
                                       BrandTitle = grouped.Key.Title,
                                       BrandLogo = grouped.Key.LogoSrc,
-                                      Color = grouped.Key.Color,
+                                      Color = grouped.Key.ColorId,
                                       Purpose = grouped.Key.Purpose,
                                       PhotoSrc = grouped.Select(g => g.p.PhotoSrc).ToList()
                                   };
@@ -70,7 +70,7 @@ namespace sneaker_collectors_backend.Services
                                           sn.Model,
                                           b.Title,
                                           sn.Discription,
-                                          sn.Color,
+                                          sn.ColorId,
                                           sp.Purpose,
                                           sn.Gender,
                                           m.UpMaterial,
@@ -85,7 +85,7 @@ namespace sneaker_collectors_backend.Services
                                           Model = grouped.Key.Model,
                                           BrandTitle = grouped.Key.Title,
                                           Discription = grouped.Key.Discription,
-                                          Color = grouped.Key.Color,
+                                          Color = grouped.Key.ColorId,
                                           Purpose = grouped.Key.Purpose,
                                           Gender = grouped.Key.Gender,
                                           UpMaterial = grouped.Key.UpMaterial,
