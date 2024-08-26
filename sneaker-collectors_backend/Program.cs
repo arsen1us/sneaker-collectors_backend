@@ -58,6 +58,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();
 builder.Services.AddTransient<ISnSampleService, SnSampleService>();
+builder.Services.AddTransient<IColorService, ColorService>();
 
 var app = builder.Build();
 

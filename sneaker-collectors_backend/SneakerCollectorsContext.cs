@@ -334,10 +334,10 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasColumnName("gender")
                 .HasDefaultValue("do not specify");
 
-            entity.HasOne(d => d.Color)
-                .WithOne(p => p.SneakerSample)
-                .HasForeignKey<SneakerSample>(d => d.ColorId)
-                .HasConstraintName("FK__sneaker_s__color__540C7B00");
+            //entity.HasOne(d => d.Color)
+            //    .WithOne(p => p.SneakerSample)
+            //    .HasForeignKey<SneakerSample>(d => d.ColorId)
+            //    .HasConstraintName("FK__sneaker_s__color__540C7B00");
         });
         // Таблица с фото шаблонов кроссовок
 
@@ -416,9 +416,9 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("color");
 
-            entity.HasOne(d => d.SneakerSample)
-                .WithOne(p => p.Color)
-                .HasForeignKey<SneakerSample>(d => d.ColorId);
+            //entity.HasOne(d => d.SneakerSample)
+            //    .WithOne(p => p.Color)
+            //    .HasForeignKey<SneakerSample>(d => d.ColorId);
         });
         // Таблица с технологиями кроссовок
 

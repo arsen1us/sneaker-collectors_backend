@@ -20,5 +20,6 @@ namespace sneaker_collectors_backend.Services
         public bool LoginIsTaken(string login);
 
         public bool EmailIsTaken(string email);
+
     }
 }
