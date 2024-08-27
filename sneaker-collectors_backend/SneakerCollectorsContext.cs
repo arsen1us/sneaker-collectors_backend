@@ -424,9 +424,9 @@ public partial class SneakerCollectorsContext : DbContext
 
         modelBuilder.Entity<SneakerTechnology>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__sneakers__3213E83FA82AC8A9");
-            entity.ToTable("sneakers_technologies");
-            entity.HasIndex(e => e.Id, "UQ__sneakers__3213E83E3FB86B78").IsUnique();
+            entity.HasKey(e => e.Id).HasName("PK__sneaker___3213E83F22AF3F35");
+            entity.ToTable("sneaker_technologies");
+            entity.HasIndex(e => e.Id, "UQ__sneaker___3213E83E9CADFF60").IsUnique();
 
             entity.Property(e => e.Id)
                 .HasMaxLength(36)

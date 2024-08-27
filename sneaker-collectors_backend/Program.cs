@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using sneaker_collectors_backend;
 using System.Text;
 using sneaker_collectors_backend.Services;
+using sneaker_collectors_backend.Models.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,8 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();
 builder.Services.AddTransient<ISnSampleService, SnSampleService>();
-builder.Services.AddTransient<IColorService, ColorService>();
+builder.Services.AddTransient<IDatabaseService<SneakerColor>, ColorService>();
+builder.Services.AddTransient<ITechnologyService, TechnologyService>();
 
 var app = builder.Build();
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace sneaker_collectors_backend.Services
 {
-    public interface IService<T> where T : class
+    public interface IDatabaseService<T> where T : class
     {
         public Task AddAsync(T obj);
 

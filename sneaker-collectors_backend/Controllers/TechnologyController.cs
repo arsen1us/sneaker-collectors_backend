@@ -1,62 +1,63 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using sneaker_collectors_backend.Models;
 using sneaker_collectors_backend.Models.Database;
+using sneaker_collectors_backend.Models;
 using sneaker_collectors_backend.Services;
 
 namespace sneaker_collectors_backend.Controllers
 {
     [ApiController]
-    [Route("api/sneaker-color")]
-    public class ColorController : Controller
+    [Route("api/tech")]
+    public class TechnologyController : Controller
     {
-        IDatabaseService<SneakerColor> _colorService;
+        ITechnologyService _technologyService;
 
-        public ColorController(IDatabaseService<SneakerColor> colorService)
+        public TechnologyController(ITechnologyService technologyService)
         {
-            _colorService = colorService;
+            _technologyService = technologyService;
         }
-        // POST: api/sneaker-color/add
+        // POST: api/tech/add
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddAsync([FromBody] AddSneakerColor addColor)
+        public async Task<IActionResult> AddAsync([FromBody] AddSneakerTech addTechnology)
         {
-            if (addColor is null)
+            if (addTechnology is null)
                 return BadRequest();
             else
             {
-                var color = new SneakerColor
+                var technology = new SneakerTechnology
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Color = addColor.Color,
+                    Technology = addTechnology.Technology,
+                    SneakerId = Guid.NewGuid().ToString(),
                 };
 
-                await _colorService.AddAsync(color);
+                await _technologyService.AddAsync(technology);
                 return Ok();
             }
         }
-        // GET: api/sneaker-color/get-all
-        
+        // GET: api/tech/get-all
+
         [HttpGet]
         [Route("get-all")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var allColors = await _colorService.GetAllAsync();
+            var allColors = await _technologyService.GetAllAsync();
             return Ok(allColors);
         }
 
-        // GET: api/sneaker-color/get-by-id
+        // GET: api/tech/get-by-id
 
         [HttpGet]
         [Route("get-by-id/{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
             else
             {
-                var color = await _colorService.GetByIdAsync(id);
-                if(color is null)
+                var color = await _technologyService.GetByIdAsync(id);
+                if (color is null)
                 {
                     // Добавить обработку данной ситуации
                     return Ok(color);
@@ -67,31 +68,31 @@ namespace sneaker_collectors_backend.Controllers
                 }
             }
         }
-        // POST: api/sneaker-color/remove
+        // POST: api/tech/remove
 
         [HttpPost]
         [Route("remove")]
         public async Task<IActionResult> RemoveAsync(string id)
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
             else
             {
-                await _colorService.RemoveAsync(id);
+                await _technologyService.RemoveAsync(id);
                 return Ok();
             }
         }
-        // POST: api/sneaker-color/update
+        // POST: api/tech/update
 
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateAsync([FromBody] SneakerColor color)
+        public async Task<IActionResult> UpdateAsync([FromBody] SneakerTechnology technology)
         {
-            if(color is null)
+            if (technology is null)
                 return BadRequest();
             else
-            { 
-                await _colorService.UpdateAsync(color);
+            {
+                await _technologyService.UpdateAsync(technology);
                 return Ok();
             }
         }

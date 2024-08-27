@@ -5,7 +5,7 @@ using sneaker_collectors_backend.Models.Database;
 
 namespace sneaker_collectors_backend.Services
 {
-    public class ColorService : IColorService
+    public class ColorService : IDatabaseService<SneakerColor>
     {
         SneakerCollectorsContext _database;
 
@@ -52,10 +52,8 @@ namespace sneaker_collectors_backend.Services
             }
             else
             {
-
+                // Обработать ошибку
             }
-
-            // Обработать ошибку
         }
         // Обновить цвет
 
