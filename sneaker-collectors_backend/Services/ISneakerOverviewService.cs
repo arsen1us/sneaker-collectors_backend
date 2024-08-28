@@ -1,4 +1,6 @@
-﻿namespace sneaker_collectors_backend.Services
+﻿using sneaker_collectors_backend.Models.Database;
+
+namespace sneaker_collectors_backend.Services
 {
     public interface ISneakerOverviewService
     {

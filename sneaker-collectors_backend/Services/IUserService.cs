@@ -1,5 +1,6 @@
 ﻿using sneaker_collectors_backend.Models;
 using sneaker_collectors_backend.Models;
+using sneaker_collectors_backend.Models.Database;
 
 namespace sneaker_collectors_backend.Services
 {

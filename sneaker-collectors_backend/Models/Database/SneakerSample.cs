@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using sneaker_collectors_backend.Models.Database;
 
 namespace sneaker_collectors_backend;
 

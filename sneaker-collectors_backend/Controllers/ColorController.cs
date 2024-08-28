@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sneaker_collectors_backend.Models;
 using sneaker_collectors_backend.Models;
+using sneaker_collectors_backend.Models.Database;
 using sneaker_collectors_backend.Services;
 
 namespace sneaker_collectors_backend.Controllers
@@ -81,17 +82,18 @@ namespace sneaker_collectors_backend.Controllers
                 return Ok();
             }
         }
-        // POST: api/sneaker-color/update
+        // POST: api/sneaker-color/update/{id}
 
         [HttpPost]
-        [Route("update")]
-        public async Task<IActionResult> UpdateAsync([FromBody] SneakerColor color)
+        [Route("update/{id}")]
+        public async Task<IActionResult> UpdateAsync(string id, [FromBody] AddSneakerColor color)
         {
             if(color is null)
                 return BadRequest();
             else
-            { 
-                await _colorService.UpdateAsync(color);
+            {
+                var col = new SneakerColor { Id = id, Color = color.Color };
+                await _colorService.UpdateAsync(col);
                 return Ok();
             }
         }

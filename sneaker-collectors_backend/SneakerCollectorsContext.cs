@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using sneaker_collectors_backend.Models.Database;
 
 namespace sneaker_collectors_backend;
 

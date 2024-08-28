@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sneaker_collectors_backend.Models;
-using sneaker_collectors_backend.Models;
+using sneaker_collectors_backend.Models.Database;
 using sneaker_collectors_backend.Services;
 
 namespace sneaker_collectors_backend.Controllers
@@ -19,13 +19,19 @@ namespace sneaker_collectors_backend.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddAsync([FromBody] SneakerTechnology technology)
+        public async Task<IActionResult> AddAsync([FromBody] AddSneakerTech technology)
         {
             if (technology is null)
                 return BadRequest();
             else
             {
-                await _technologyService.AddAsync(technology);
+                SneakerTechnology tech = new SneakerTechnology
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Technology = technology.Technology
+                };
+
+                await _technologyService.AddAsync(tech);
                 return Ok();
             }
         }
@@ -78,14 +84,15 @@ namespace sneaker_collectors_backend.Controllers
         // POST: api/tech/update
 
         [HttpPost]
-        [Route("update")]
-        public async Task<IActionResult> UpdateAsync([FromBody] SneakerTechnology technology)
+        [Route("update/{id}")]
+        public async Task<IActionResult> UpdateAsync(string id, [FromBody] AddSneakerTech technology)
         {
             if (technology is null)
                 return BadRequest();
             else
             {
-                await _technologyService.UpdateAsync(technology);
+                var tech = new SneakerTechnology { Id = id, Technology = technology.Technology };
+                await _technologyService.UpdateAsync(tech);
                 return Ok();
             }
         }
