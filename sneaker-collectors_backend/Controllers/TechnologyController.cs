@@ -19,19 +19,12 @@ namespace sneaker_collectors_backend.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddAsync([FromBody] AddSneakerTech addTechnology)
+        public async Task<IActionResult> AddAsync([FromBody] SneakerTechnology technology)
         {
-            if (addTechnology is null)
+            if (technology is null)
                 return BadRequest();
             else
             {
-                var technology = new SneakerTechnology
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Technology = addTechnology.Technology,
-                    SneakerId = Guid.NewGuid().ToString(),
-                };
-
                 await _technologyService.AddAsync(technology);
                 return Ok();
             }

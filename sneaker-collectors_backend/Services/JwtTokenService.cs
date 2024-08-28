@@ -6,9 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using sneaker_collectors_backend.Services;
 
-
-
-
 namespace sneaker_collectors_backend.Services
 {
     public class JwtTokenService : IJwtTokenService

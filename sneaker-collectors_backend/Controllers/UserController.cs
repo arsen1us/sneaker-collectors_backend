@@ -13,13 +13,13 @@ namespace sneaker_collectors_backend.Controllers
     {
         IUserService _userService;
         IJwtTokenService _jwtTokenService;
-        SneakerCollectorsContext _database;
+        //SneakerCollectorsContext _database;
         HttpClient _client;
 
-        public UserController(IUserService userService, SneakerCollectorsContext database, IJwtTokenService jwtTokenService)
+        public UserController(IUserService userService /*, SneakerCollectorsContext database*/, IJwtTokenService jwtTokenService)
         {
             _userService = userService;
-            _database = database;
+            //_database = database;
             _jwtTokenService = jwtTokenService;
             _client = HttpClientSingleton.Client;
         }

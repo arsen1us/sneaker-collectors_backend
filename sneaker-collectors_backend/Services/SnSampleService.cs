@@ -54,7 +54,7 @@ namespace sneaker_collectors_backend.Services
 
         public async Task<SneakerOverview> GetByIdAsync(string id)
         {
-            if(await ExistsAsync(id))
+            if (await ExistsAsync(id))
             {
                 var sneakerOverview = from sn in _database.SneakerSamples
                                       where sn.Id == id

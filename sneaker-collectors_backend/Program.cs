@@ -54,7 +54,7 @@ builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-// Custom-Зависимости
+// Custom - Зависимости
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();

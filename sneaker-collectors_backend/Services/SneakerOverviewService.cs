@@ -17,10 +17,10 @@ namespace sneaker_collectors_backend.Services
         {
             int offset = Int32.Parse(pageId) - 10;
 
-            if(offset == 0)
+            if (offset == 0)
             {
                 var sneakerSamples = _database.SneakerSamples.Take(limit);
-                
+
                 return await sneakerSamples.ToListAsync();
             }
             else

@@ -24,9 +24,9 @@ namespace sneaker_collectors_backend.Services
 
         public async Task<SneakerColor> GetByIdAsync(string id)
         {
-            if(await IsExists(id))
+            if (await IsExists(id))
             {
-                var color = await _database.SneakersColors.FirstOrDefaultAsync(c => c.Id == id);
+                var color = await _database.SneakerColors.FirstOrDefaultAsync(c => c.Id == id);
                 return color;
             }
             // Добавить обработку данной ситуации
@@ -36,7 +36,7 @@ namespace sneaker_collectors_backend.Services
 
         public async Task<List<SneakerColor>> GetAllAsync()
         {
-            var allColors = await _database.SneakersColors.ToListAsync();
+            var allColors = await _database.SneakerColors.ToListAsync();
             return allColors;
         }
 
@@ -47,7 +47,7 @@ namespace sneaker_collectors_backend.Services
             var color = await GetByIdAsync(id);
             if (color != null)
             {
-                _database.SneakersColors.Remove(color);
+                _database.SneakerColors.Remove(color);
                 await _database.SaveChangesAsync();
             }
             else
@@ -59,8 +59,8 @@ namespace sneaker_collectors_backend.Services
 
         public async Task UpdateAsync(SneakerColor color)
         {
-            var existingColor = await _database.SneakersColors.FindAsync(color.Id);
-            if(existingColor == null)
+            var existingColor = await _database.SneakerColors.FindAsync(color.Id);
+            if (existingColor == null)
             {
                 // Добавить обработку данной ситуэйшон
             }
@@ -74,7 +74,7 @@ namespace sneaker_collectors_backend.Services
 
         public async Task<bool> IsExists(string id)
         {
-            if (await _database.SneakersColors.AnyAsync(c => c.Id == id))
+            if (await _database.SneakerColors.AnyAsync(c => c.Id == id))
                 return true;
             return false;
         }
