@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sneaker_collectors_backend.Models.Database;
+namespace sneaker_collectors_backend;
 
 public partial class Brand
 {
@@ -22,4 +22,6 @@ public partial class Brand
     public virtual ICollection<BrandFounder> BrandFounders { get; set; } = new List<BrandFounder>();
 
     public virtual ICollection<UserSneaker> UserSneakers { get; set; } = new List<UserSneaker>();
+
+    public virtual ICollection<SneakerSample> SneakerSamples { get; set;} = new List<SneakerSample>();
 }

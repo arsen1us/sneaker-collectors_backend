@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using sneaker_collectors_backend.Models.Database;
 
 namespace sneaker_collectors_backend;
 
@@ -39,6 +38,8 @@ public partial class SneakerCollectorsContext : DbContext
     public virtual DbSet<SneakerTechnology> SneakerTechnologies { get; set; }
 
     public virtual DbSet<SneakersState> SneakersStates { get; set; }
+
+    public virtual DbSet<TechnologiesList> TechnologiesLists { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -262,10 +263,6 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("not specified")
                 .HasColumnName("insole_material");
-            entity.Property(e => e.SneakerId)
-                .HasMaxLength(36)
-                .IsUnicode(false)
-                .HasColumnName("sneaker_id");
             entity.Property(e => e.SoleMaterial)
                 .HasMaxLength(32)
                 .IsUnicode(false)
@@ -276,11 +273,6 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("not specified")
                 .HasColumnName("up_material");
-
-            entity.HasOne(d => d.Sneaker).WithMany(p => p.SneakerMaterials)
-                .HasForeignKey(d => d.SneakerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__sneaker_m__insol__74AE54BC");
         });
 
         modelBuilder.Entity<SneakerPurpose>(entity =>
@@ -299,15 +291,6 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("purpose");
-            entity.Property(e => e.SneakerSampleId)
-                .HasMaxLength(36)
-                .IsUnicode(false)
-                .HasColumnName("sneaker_sample_id");
-
-            entity.HasOne(d => d.SneakerSample).WithMany(p => p.SneakerPurposes)
-                .HasForeignKey(d => d.SneakerSampleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__sneaker_p__purpo__7D439ABD");
         });
 
         modelBuilder.Entity<SneakerSample>(entity =>
@@ -340,15 +323,47 @@ public partial class SneakerCollectorsContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("do not specify")
                 .HasColumnName("gender");
+            entity.Property(e => e.MaterialId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("material_id");
             entity.Property(e => e.Model)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("model");
+            entity.Property(e => e.PurposeId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("purpose_id");
+            entity.Property(e => e.TechnologyId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("technology_id");
 
-            entity.HasOne(d => d.Color).WithMany(p => p.SneakerSample)
+            entity.HasOne(d => d.Brand).WithMany(p => p.SneakerSamples)
+                .HasForeignKey(d => d.BrandId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__sneaker_s__brand__7D0E9093");
+
+            entity.HasOne(d => d.Color).WithMany(p => p.SneakerSamples)
                 .HasForeignKey(d => d.ColorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__sneaker_s__color__540C7B00");
+                .HasConstraintName("FK__sneaker_s__color__793DFFAF");
+
+            entity.HasOne(d => d.Material).WithMany(p => p.SneakerSamples)
+                .HasForeignKey(d => d.MaterialId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__sneaker_s__mater__7A3223E8");
+
+            entity.HasOne(d => d.Purpose).WithMany(p => p.SneakerSamples)
+                .HasForeignKey(d => d.PurposeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__sneaker_s__purpo__7B264821");
+
+            entity.HasOne(d => d.Technology).WithMany(p => p.SneakerSamples)
+                .HasForeignKey(d => d.TechnologyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__sneaker_s__techn__7C1A6C5A");
         });
 
         modelBuilder.Entity<SneakerSamplesPhoto>(entity =>
@@ -391,10 +406,6 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasMaxLength(36)
                 .IsUnicode(false)
                 .HasColumnName("id");
-            entity.Property(e => e.SneakerId)
-                .HasMaxLength(36)
-                .IsUnicode(false)
-                .HasColumnName("sneaker_id");
             entity.Property(e => e.Technology)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -428,6 +439,24 @@ public partial class SneakerCollectorsContext : DbContext
                 .HasForeignKey(d => d.SneakerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__sneakers___sneak__797309D9");
+        });
+
+        modelBuilder.Entity<TechnologiesList>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__technolo__3213E83FA55280C6");
+
+            entity.ToTable("technologies_list");
+
+            entity.HasIndex(e => e.Id, "UQ__technolo__3213E83E0D74813A").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("id");
+            entity.Property(e => e.Technology)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("technology");
         });
 
         modelBuilder.Entity<User>(entity =>

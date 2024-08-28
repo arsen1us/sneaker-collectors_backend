@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sneaker_collectors_backend.Models.Database;
+namespace sneaker_collectors_backend;
 
 public partial class NewsPhoto
 {

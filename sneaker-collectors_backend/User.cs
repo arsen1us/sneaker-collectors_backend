@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sneaker_collectors_backend.Models.Database;
+namespace sneaker_collectors_backend;
 
 public partial class User
 {
     public string Id { get; set; } = null!;
-
-    public string Name { get; set; } = null!;
-
-    public string Surname { get; set; } = null!;
 
     public int? Age { get; set; }
 
@@ -19,7 +15,11 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    public string PhoroSrc { get; set; } = null!;
+
     public string Gender { get; set; } = null!;
 
-    public string PhoroSrc { get; set; } = null!;
+    public string Name { get; set; } = null!;
+
+    public string Surname { get; set; } = null!;
 }

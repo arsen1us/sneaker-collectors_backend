@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sneaker_collectors_backend.Models.Database;
+namespace sneaker_collectors_backend;
 
 public partial class SneakerMaterial
 {
     public string Id { get; set; } = null!;
-
-    public string SneakerId { get; set; } = null!;
 
     public string UpMaterial { get; set; } = null!;
 
@@ -17,5 +15,5 @@ public partial class SneakerMaterial
 
     public string InsoleMaterial { get; set; } = null!;
 
-    public virtual SneakerSample Sneaker { get; set; } = null!;
+    public virtual ICollection<SneakerSample> SneakerSamples { get; set; } = new List<SneakerSample>();
 }

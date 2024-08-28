@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using sneaker_collectors_backend;
 using System.Text;
 using sneaker_collectors_backend.Services;
-using sneaker_collectors_backend.Models.Database;
+using sneaker_collectors_backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,18 +49,18 @@ configBuilder.AddJsonFile("appsettings.json");
 var config = configBuilder.Build();
 string connectionString = config.GetConnectionString("Default");
 
-builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
+//builder.Services.AddDbContext<SneakerCollectorsContext>(options =>
+//{
+//    options.UseSqlServer(connectionString);
+//});
 
 // Custom - Зависимости
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
-builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();
-builder.Services.AddTransient<ISnSampleService, SnSampleService>();
-builder.Services.AddTransient<IDatabaseService<SneakerColor>, ColorService>();
-builder.Services.AddTransient<ITechnologyService, TechnologyService>();
+//builder.Services.AddTransient<IUserService, UserService>();
+//builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
+//builder.Services.AddTransient<ISneakerOverviewService, SneakerOverviewService>();
+//builder.Services.AddTransient<ISnSampleService, SnSampleService>();
+//builder.Services.AddTransient<IDatabaseService<SneakerColor>, ColorService>();
+//builder.Services.AddTransient<ITechnologyService, TechnologyService>();
 
 var app = builder.Build();
 

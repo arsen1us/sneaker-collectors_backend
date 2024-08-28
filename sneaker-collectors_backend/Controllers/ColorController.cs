@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sneaker_collectors_backend.Models;
-using sneaker_collectors_backend.Models.Database;
+using sneaker_collectors_backend.Models;
 using sneaker_collectors_backend.Services;
 
 namespace sneaker_collectors_backend.Controllers
